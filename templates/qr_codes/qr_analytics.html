@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/apps/qr_codes.css' %}">
+{% endblock %}
+
+{% block title %}Analytics - {{ qr_code.name }}{% endblock %}
+
+{% block content %}
+<h1>Analytics: {{ qr_code.name }}</h1>
+
+<div class="analytics-grid">
+    <div class="stat-card">
+        <div class="stat-card__value">{{ total_scans }}</div>
+        <div class="stat-card__label">Total Scans</div>
+    </div>
+    {% for stat in device_stats %}
+    <div class="stat-card">
+        <div class="stat-card__value">{{ stat.count }}</div>
+        <div class="stat-card__label">{{ stat.device_type }}</div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <h3>Browser Breakdown</h3>
+    </div>
+    <div class="card-body">
+        <table class="qr-table">
+            <thead>
+                <tr>
+                    <th>Browser</th>
+                    <th>Scans</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in browser_stats %}
+                <tr>
+                    <td>{{ stat.browser }}</td>
+                    <td>{{ stat.count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="{% url 'qr_codes:detail' qr_code.pk %}" class="btn btn-outline">Back to QR Code</a>
+</div>
+{% endblock %}

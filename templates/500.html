@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Server Error</title>
+    
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/buttons.css' %}">
+    
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+        
+        .error-container {
+            text-align: center;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            max-width: 500px;
+            margin: 2rem;
+        }
+        
+        .error-icon {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+        }
+        
+        .error-code {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #dc3545;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .error-title {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            color: var(--text-primary);
+        }
+        
+        .error-message {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        <h1 class="error-code">500</h1>
+        <h2 class="error-title">Server Error</h2>
+        <p class="error-message">
+            Something went wrong on our end. 
+            We've been notified and are working to fix it.
+        </p>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">Go Home</a>
+            <a href="javascript:location.reload()" class="btn btn-outline">Try Again</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -11,6 +11,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('health/', include('health_check.urls')),
     path('accounts/', include('apps.accounts.urls')),
+    path('qr/', include('apps.qr_codes.urls')),  # QR code management
 ]
 
 # Serve media files in development

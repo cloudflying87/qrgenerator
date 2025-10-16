@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Local apps
     'apps.accounts',  # Custom user model (MUST be before core)
     'apps.core',
+    'apps.qr_codes',  # QR code generation and management
 ]
 
 # Custom User Model
@@ -221,7 +222,7 @@ DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@example.com')
 
 # Authentication URLs
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/qr/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Django REST Framework

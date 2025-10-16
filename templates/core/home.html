@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/apps/qr_codes.css' %}">
+<style>
+    .hero {
+        text-align: center;
+        padding: 4rem 0;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+        color: var(--white);
+        border-radius: var(--border-radius);
+        margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--white);
+    }
+
+    .hero p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .hero .btn {
+        background: var(--white);
+        color: var(--primary-color);
+        font-weight: 600;
+        padding: 1rem 2rem;
+        font-size: 1.125rem;
+    }
+
+    .hero .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .features {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    @media (min-width: 768px) {
+        .hero h1 {
+            font-size: 3rem;
+        }
+        
+        .features {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 992px) {
+        .features {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .feature-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        text-align: center;
+        transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+        margin-bottom: 0.5rem;
+    }
+
+    .cta-section {
+        text-align: center;
+        padding: 3rem 0;
+        background: var(--bg-secondary);
+        border-radius: var(--border-radius);
+        margin-top: 3rem;
+    }
+
+    .cta-section h2 {
+        margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block title %}QR Generator - Create Dynamic & Static QR Codes{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>🎯 Professional QR Code Generator</h1>
+    <p>Create dynamic and static QR codes with full analytics tracking</p>
+    {% if user.is_authenticated %}
+        <a href="{% url 'qr_codes:create' %}" class="btn btn-lg">Create Your First QR Code</a>
+    {% else %}
+        <a href="/accounts/register/" class="btn btn-lg">Get Started Free</a>
+    {% endif %}
+</div>
+
+<div class="features">
+    <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Dynamic QR Codes</h3>
+        <p>Change destination URLs without reprinting. Perfect for campaigns and marketing.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>Full Analytics</h3>
+        <p>Track scans, devices, browsers, and locations. Know exactly who's scanning your codes.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Customizable</h3>
+        <p>Choose colors, sizes, and error correction levels. Make your QR codes match your brand.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Password Protected</h3>
+        <p>Add password protection to sensitive QR codes. Control who can access your content.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">⏰</div>
+        <h3>Expiration & Limits</h3>
+        <p>Set expiration dates and scan limits. Perfect for time-limited promotions.</p>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Mobile Optimized</h3>
+        <p>Works perfectly on all devices. Manage your QR codes from anywhere.</p>
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+<div class="card">
+    <div class="card-header">
+        <h3>Quick Start</h3>
+    </div>
+    <div class="card-body">
+        <ol style="line-height: 2;">
+            <li><strong>Create a QR Code</strong> - Choose static (permanent) or dynamic (changeable)</li>
+            <li><strong>Customize</strong> - Set colors, size, and optional limits</li>
+            <li><strong>Download</strong> - Get your QR code as a PNG image</li>
+            <li><strong>Track</strong> - Watch real-time analytics as people scan</li>
+        </ol>
+        <div class="mt-3">
+            <a href="{% url 'qr_codes:create' %}" class="btn btn-primary">Create QR Code Now</a>
+            <a href="{% url 'qr_codes:list' %}" class="btn btn-outline">View My QR Codes</a>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="cta-section">
+    <h2>Ready to Get Started?</h2>
+    <p>Create unlimited QR codes with advanced analytics</p>
+    <a href="/accounts/register/" class="btn btn-primary btn-lg">Sign Up Free</a>
+    <a href="/accounts/login/" class="btn btn-outline btn-lg">Login</a>
+</div>
+{% endif %}
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h3>Use Cases</h3>
+    </div>
+    <div class="card-body">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+            <div>
+                <h4>🍽️ Restaurants & Cafes</h4>
+                <p class="text-muted">Digital menus that you can update instantly. Change specials without reprinting.</p>
+            </div>
+            <div>
+                <h4>🎫 Events & Tickets</h4>
+                <p class="text-muted">Track attendance, limit scans, and expire codes after events end.</p>
+            </div>
+            <div>
+                <h4>📦 Product Packaging</h4>
+                <p class="text-muted">Link to manuals, videos, or registration pages. Update content anytime.</p>
+            </div>
+            <div>
+                <h4>📍 Real Estate</h4>
+                <p class="text-muted">Property listings with virtual tours. Track which properties get the most interest.</p>
+            </div>
+            <div>
+                <h4>📢 Marketing Campaigns</h4>
+                <p class="text-muted">Track campaign performance across different channels and locations.</p>
+            </div>
+            <div>
+                <h4>🏢 Business Cards</h4>
+                <p class="text-muted">Link to your portfolio, LinkedIn, or booking page. Update your details anytime.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

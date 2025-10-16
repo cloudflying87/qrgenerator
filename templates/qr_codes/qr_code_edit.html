@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/apps/qr_codes.css' %}">
+{% endblock %}
+
+{% block title %}Edit {{ qr_code.name }}{% endblock %}
+
+{% block content %}
+<h1>Edit QR Code</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" name="name" class="form-control" value="{{ qr_code.name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="destination_url" class="form-label">Destination URL</label>
+                <input type="url" id="destination_url" name="destination_url" class="form-control" value="{{ qr_code.destination_url }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status" class="form-label">Status</label>
+                <select id="status" name="status" class="form-control">
+                    <option value="active" {% if qr_code.status == 'active' %}selected{% endif %}>Active</option>
+                    <option value="paused" {% if qr_code.status == 'paused' %}selected{% endif %}>Paused</option>
+                    <option value="expired" {% if qr_code.status == 'expired' %}selected{% endif %}>Expired</option>
+                </select>
+            </div>
+
+            <div class="btn-group mt-3">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{% url 'qr_codes:detail' qr_code.pk %}" class="btn btn-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

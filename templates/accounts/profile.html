@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/apps/qr_codes.css' %}">
+{% endblock %}
+
+{% block title %}Profile - QR Generator{% endblock %}
+
+{% block content %}
+<h1>My Profile</h1>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Account Information</h3>
+    </div>
+    <div class="card-body">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+            <div>
+                <strong>Username:</strong> {{ user.username }}
+            </div>
+            <div>
+                <strong>Email:</strong> {{ user.email }}
+            </div>
+            <div>
+                <strong>Member since:</strong> {{ user.date_joined|date:"F j, Y" }}
+            </div>
+            {% if user.first_name or user.last_name %}
+            <div>
+                <strong>Name:</strong> {{ user.get_full_name }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <h3>Quick Stats</h3>
+    </div>
+    <div class="card-body">
+        <div class="analytics-grid">
+            <div class="stat-card">
+                <div class="stat-card__value">{{ total_qr_codes }}</div>
+                <div class="stat-card__label">Total QR Codes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card__value">{{ dynamic_count }}</div>
+                <div class="stat-card__label">Dynamic</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card__value">{{ static_count }}</div>
+                <div class="stat-card__label">Static</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card__value">{{ active_count }}</div>
+                <div class="stat-card__label">Active</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <h3>Account Actions</h3>
+    </div>
+    <div class="card-body">
+        <div class="btn-group">
+            <a href="{% url 'qr_codes:list' %}" class="btn btn-primary">View My QR Codes</a>
+            <a href="{% url 'qr_codes:create' %}" class="btn btn-outline">Create New QR Code</a>
+            <a href="{% url 'password_change' %}" class="btn btn-outline">Change Password</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

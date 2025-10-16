@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}QR Generator{% endblock %}</title>
+
+    {% load static %}
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/cards.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/navbar.css' %}">
+
+    <!-- App-specific CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="navbar-brand">QR Generator</a>
+
+            {% if user.is_authenticated %}
+            <div class="navbar-menu">
+                <a href="{% url 'qr_codes:list' %}" class="navbar-link">My QR Codes</a>
+                <a href="{% url 'qr_codes:create' %}" class="navbar-link">Create New</a>
+                <a href="{% url 'profile' %}" class="navbar-link">Profile</a>
+                <form method="post" action="{% url 'logout' %}" style="display: inline; margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="navbar-link" style="background: none; border: none; cursor: pointer; font: inherit; color: inherit; padding: 0.5rem 1rem;">Logout</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="navbar-menu">
+                <a href="/accounts/login/" class="navbar-link">Login</a>
+                <a href="/accounts/register/" class="navbar-link">Register</a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="container" style="margin-top: 2rem; margin-bottom: 2rem;">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 2rem 0; color: var(--text-secondary); border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <p>&copy; 2025 QR Generator. All rights reserved.</p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

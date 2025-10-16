@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/apps/qr_codes.css' %}">
+{% endblock %}
+
+{% block title %}Create QR Code{% endblock %}
+
+{% block content %}
+<h1>Create QR Code</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="name" class="form-label">Name <span class="required">*</span></label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="qr_type" class="form-label">Type</label>
+                <select id="qr_type" name="qr_type" class="form-control">
+                    <option value="static">Static QR Code</option>
+                    <option value="dynamic" selected>Dynamic QR Code (Trackable)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destination_url" class="form-label">Destination URL <span class="required">*</span></label>
+                <input type="url" id="destination_url" name="destination_url" class="form-control" placeholder="https://example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="3"></textarea>
+            </div>
+
+            <h3>Customization (Optional)</h3>
+
+            <div class="qr-customization">
+                <div class="form-group">
+                    <label for="size" class="form-label">Size (px)</label>
+                    <input type="number" id="size" name="size" class="form-control" value="300" min="100" max="1000">
+                </div>
+
+                <div class="form-group">
+                    <label for="error_correction" class="form-label">Error Correction</label>
+                    <select id="error_correction" name="error_correction" class="form-control">
+                        <option value="L">Low (7%)</option>
+                        <option value="M" selected>Medium (15%)</option>
+                        <option value="Q">Quartile (25%)</option>
+                        <option value="H">High (30%)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="foreground_color" class="form-label">QR Color</label>
+                    <input type="color" id="foreground_color" name="foreground_color" class="form-control" value="#000000">
+                </div>
+
+                <div class="form-group">
+                    <label for="background_color" class="form-label">Background Color</label>
+                    <input type="color" id="background_color" name="background_color" class="form-control" value="#FFFFFF">
+                </div>
+            </div>
+
+            <div class="btn-group mt-3">
+                <button type="submit" class="btn btn-primary">Create QR Code</button>
+                <a href="{% url 'qr_codes:list' %}" class="btn btn-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .logout-container {
+        max-width: 450px;
+        margin: 3rem auto;
+        text-align: center;
+    }
+
+    .logout-card {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 3rem 2.5rem;
+        box-shadow: var(--shadow-md);
+    }
+
+    .logout-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .logout-card h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .logout-card p {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block title %}Logged Out - QR Generator{% endblock %}
+
+{% block content %}
+<div class="logout-container">
+    <div class="logout-card">
+        <div class="logout-icon">👋</div>
+        <h1>Successfully Logged Out</h1>
+        <p>You have been logged out of your account.</p>
+        
+        <div class="btn-group" style="justify-content: center;">
+            <a href="{% url 'login' %}" class="btn btn-primary">Login Again</a>
+            <a href="{% url 'core:home' %}" class="btn btn-outline">Go Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

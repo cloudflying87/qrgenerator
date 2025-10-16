@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/apps/qr_codes.css' %}">
+{% endblock %}
+
+{% block title %}My QR Codes{% endblock %}
+
+{% block content %}
+<h1>My QR Codes</h1>
+
+<div class="mb-3">
+    <a href="{% url 'qr_codes:create' %}" class="btn btn-primary">Create New QR Code</a>
+</div>
+
+{% if qr_codes %}
+<div class="qr-list">
+    {% for qr in qr_codes %}
+    <div class="qr-card">
+        <div class="qr-card__header">
+            <h3 class="qr-card__title">{{ qr.name }}</h3>
+            <span class="qr-card__type qr-card__type--{{ qr.qr_type }}">{{ qr.get_qr_type_display }}</span>
+        </div>
+        <div class="qr-card__body">
+            <p class="text-muted">{{ qr.destination_url|truncatechars:50 }}</p>
+            <div class="qr-card__stats">
+                <div class="qr-card__stat">
+                    <div class="qr-card__stat-value">{{ qr.total_scans }}</div>
+                    <div class="qr-card__stat-label">Scans</div>
+                </div>
+                <div class="qr-card__stat">
+                    <div class="qr-card__stat-value">{{ qr.unique_scans }}</div>
+                    <div class="qr-card__stat-label">Unique</div>
+                </div>
+            </div>
+        </div>
+        <div class="qr-card__footer">
+            <a href="{% url 'qr_codes:detail' qr.pk %}" class="btn btn-sm btn-outline">View</a>
+            <a href="{% url 'qr_codes:edit' qr.pk %}" class="btn btn-sm btn-outline">Edit</a>
+            <a href="{% url 'qr_codes:download' qr.pk %}" class="btn btn-sm btn-outline">Download</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <h2 class="empty-state__title">No QR Codes Yet</h2>
+    <p class="empty-state__description">Create your first QR code to get started!</p>
+    <a href="{% url 'qr_codes:create' %}" class="btn btn-primary">Create QR Code</a>
+</div>
+{% endif %}
+{% endblock %}
